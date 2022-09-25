@@ -1,0 +1,8 @@
+---
+requires_repo:
+- 36
+- 37
+
+inttf_repo: "https://rpms.if-not-true-then-false.com/inttf.repo"
+
+updates: "/etc/yum.repos.d/fedora-updates.repo"

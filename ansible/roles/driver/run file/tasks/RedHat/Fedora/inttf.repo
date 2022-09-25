@@ -1,0 +1,7 @@
+---
+
+- name: Enable inttf repo on Fedora 37 and 36 systems
+  ansible.builtin.get_url:
+    url: "{{ inttf_repo }}"
+    dest: /etc/yum.repos.d/inttf.repo
+  become: true
