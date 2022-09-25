@@ -1,8 +1,9 @@
 ---
 - hosts: local
   vars:
+    protocol: X11
     dkms: true
-    version: 470
+    driver_version: 470
 
   roles:
   - default

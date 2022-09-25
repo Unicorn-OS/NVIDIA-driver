@@ -1,7 +1,6 @@
 ---
 dependencies:
-# - hwd/{{ version }}
+# - vers/{{ driver_version }}
 # - func/get
 # - func/download
-- { role: 'driver/inttf kernel (unsafe!)', when: ansible_os_family == 'RedHat' }
 # - { role: 'driver/run file', when: ansible_os_family == 'RedHat' }
