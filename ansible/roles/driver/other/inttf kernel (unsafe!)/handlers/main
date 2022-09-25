@@ -1,0 +1,6 @@
+---
+- name: grub updated
+  become: yes
+  ansible.builtin.file:
+    path: /boot/grub-updated
+    state: touch

@@ -62,10 +62,36 @@
     replace: 'rhgb quiet rd.driver.blacklist=nouveau"'
   when: protocol == "X11"
 
-- name: Generate grub
+- name: Update grub
   become: yes
   ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
-  # args:
-  #   creates: /path/to/
+  notify: grub updated
+  args:
+    creates: /boot/grub-updated
+
+- name: Remove xorg-x11-drv-nouveau
+  become: yes
+  ansible.builtin.dnf:
+    name: xorg-x11-drv-nouveau
+    state: absent
+
+- name: uname -r
+  shell: uname -r
+  register: uname
+
+- name: Backup old initramfs nouveau image
+  become: true
+  ansible.builtin.copy:
+    src: "/boot/initramfs-{{ uname.stdout }}.img"
+    dest: "/boot/initramfs-{{ uname.stdout }}-nouveau.img"
+    remote_src: yes
+
+
+- name: Create new initramfs image
+  become: yes
+  ansible.builtin.command: "dracut /boot/initramfs-{{ uname.stdout }}.img {{ uname.stdout }}"
+  args:
+    creates: "/boot/initramfs-{{ uname.stdout }}.img"
+
 
 # source: https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/
