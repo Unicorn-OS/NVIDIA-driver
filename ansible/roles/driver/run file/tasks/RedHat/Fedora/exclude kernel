@@ -1,4 +1,10 @@
 ---
+- name: block [fedora]
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ updates }}"
+    line: "[fedora]"
+
 - name: Exclude kernel updates from [updates]
   become: yes
   lineinfile:
@@ -6,22 +12,20 @@
     insertafter: "^\\[updates\\]"
     line: "exclude=kernel*"
     state: present
-    backup: yes
-
-- name: block [fedora]
-  become: true
-  ansible.builtin.lineinfile:
-    path: "{{ updates }}"
-    line: "[fedora]"
 
 # Has to be last, so it'll write "exclude=kernel" twice
+# - name: Exclude kernel updates from [fedora]
+#   become: yes
+#   lineinfile:
+#     path: "{{ updates }}"
+#     insertafter: "^[fedora]"
+#     line: "exclude=kernel*"
+#     state: present
+#     backup: yes
+
 - name: Exclude kernel updates from [fedora]
   become: yes
-  lineinfile:
+  replace:
     path: "{{ updates }}"
-    insertafter: "^\\[fedora\\]"
-    line: "exclude=kernel*"
-    state: present
-    backup: yes
-
-# https://www.if-not-true-then-false.com/2020/inttf-nvidia-patcher/
+    regexp: "^\\[fedora\\]"
+    replace: "[fedora]\nexclude=kernel*"

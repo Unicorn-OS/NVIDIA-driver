@@ -1,6 +1,6 @@
 ---
 dependencies:
-- hwd/{{ version }}
-- func/get
-- func/download
+# - hwd/{{ version }}
+# - func/get
+# - func/download
 - { role: 'driver/run file', when: ansible_os_family == 'RedHat' }
