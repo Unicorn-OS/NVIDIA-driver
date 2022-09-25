@@ -1,2 +1,3 @@
 ---
-download_url: https://www.nvidia.com/content/DriverDownload-March2009/confirmation.php?url=/XFree86/Linux-x86_64/470.141.03/NVIDIA-Linux-x86_64-470.141.03.run&lang=us&type=TITAN
+file: "NVIDIA-Linux-x86_64-470.141.03.run"
+download_url: "https://us.download.nvidia.com/XFree86/Linux-x86_64/470.141.03/{{ file }}"

@@ -9,9 +9,6 @@
 - name: Download driver
   ansible.builtin.get_url:
     url: "{{ download_url}}"
-    dest: "{{ to }}"
+    dest: "{{ to }}/{{ file }}"
     mode: 'a+x'
   become: true
-
-- debug:
-    msg: "hello {{download_url}}"
