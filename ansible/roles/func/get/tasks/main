@@ -1,0 +1,6 @@
+---
+- name: Get GPU
+  # ansible.builtin.command:
+  ansible.builtin.shell: 'lspci |grep -E "VGA|3D" > {{info}}'
+  args:
+    creates: "{{ info }}"

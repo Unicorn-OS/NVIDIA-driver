@@ -1,0 +1,6 @@
+---
+dependencies:
+- temp
+- { role: 'func/get', when: ansible_os_family == 'RedHat' }
+- func/download
+# - Nvidia driver/run file

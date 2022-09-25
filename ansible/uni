@@ -1,0 +1,9 @@
+---
+- hosts: local
+  vars:
+    kmod: true
+    version: 470
+
+  roles:
+  - default
+  # - Nvidia driver/package

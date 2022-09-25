@@ -1,0 +1,17 @@
+---
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ to }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+  become: true
+
+- name: Download driver
+  ansible.builtin.get_url:
+    url: "{{ download_url}}"
+    dest: "{{ to }}"
+    mode: 'a+x'
+  become: true
+
+- debug:
+    msg: "hello {{download_url}}"
