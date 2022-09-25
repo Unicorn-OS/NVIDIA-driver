@@ -7,17 +7,17 @@
 #     state: latest
 #   become: true
 
-- name: Fedora 36 & 37
-  include_tasks: "{{ item }}"
-  when: ansible_distribution_major_version | int in requires_repo
-  with_items:
-    - exclude kernel
-    - inttf.repo
+# - name: Fedora 36 & 37
+#   include_tasks: "{{ item }}"
+#   when: ansible_distribution_major_version | int in requires_repo
+#   with_items:
+#     - exclude kernel
+#     - inttf.repo
 
-- name: dnf update
+- name: Upgrade all packages
+  become: yes
   ansible.builtin.dnf:
+    name: "*"
     state: latest
-    update_cache: yes
-    update_only: yes
 
 # source: https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/
