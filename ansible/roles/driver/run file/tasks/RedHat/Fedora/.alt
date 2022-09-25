@@ -1,0 +1,31 @@
+---
+# Couldn't get these to work!
+
+- name: start [fedora]
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ updates }}"
+    line: "[fedora]"
+
+- name: Exclude kernel updates from [fedora]
+  become: yes
+  lineinfile:
+    path: "{{ updates }}"
+    insertafter: "^[fedora]"
+    line: "exclude=kernel*"
+    state: present
+    backup: yes
+
+- name: Exclude kernel updates from [fedora]
+  become: yes
+  replace:
+    path: "{{ updates }}"
+    regexp: "^\\[fedora\\]"
+    replace: "[fedora]\nexclude=kernel*"
+
+- name: Exclude kernel updates from [fedora]
+  become: yes
+  replace:
+    path: "{{ updates }}"
+    regexp: "(^\\[fedora\\])|(^\\[fedora\\]\nexclude=kernel*)"
+    replace: "[fedora]\nexclude=kernel*"

@@ -13,3 +13,11 @@
   with_items:
     - exclude kernel
     - inttf.repo
+
+- name: dnf update
+  ansible.builtin.dnf:
+    state: latest
+    update_cache: yes
+    update_only: yes
+
+# source: https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/
