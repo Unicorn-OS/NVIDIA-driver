@@ -81,10 +81,9 @@
 
 - name: Backup old initramfs nouveau image
   become: true
-  ansible.builtin.copy:
-    src: "/boot/initramfs-{{ uname.stdout }}.img"
-    dest: "/boot/initramfs-{{ uname.stdout }}-nouveau.img"
-    remote_src: yes
+  ansible.builtin.command: mv "/boot/initramfs-{{ uname.stdout }}.img" "/boot/initramfs-{{ uname.stdout }}-nouveau.img"
+  args:
+    creates: "/boot/initramfs-{{ uname.stdout }}-nouveau.img"
 
 
 - name: Create new initramfs image
