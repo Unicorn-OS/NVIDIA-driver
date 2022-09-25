@@ -1,3 +1,3 @@
 ---
-# Automatically uses Sub-folders to contain distro specific scrips
-- include_tasks: '{{ ansible_os_family }}/{{ ansible_distribution }}/{{ ansible_distribution_major_version }}'
+# Convert the if-not-true-then-false Guide into my own that Doesn't use their kernel!
+source: https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/

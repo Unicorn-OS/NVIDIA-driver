@@ -1,0 +1,71 @@
+---
+# - name: Dependencies
+#   ansible.builtin.dnf:
+#     name:
+#       - wget
+#       - patch
+#     state: latest
+#   become: true
+
+# - name: Fedora 36 & 37
+#   include_tasks: "{{ item }}"
+#   when: ansible_distribution_major_version | int in requires_repo
+#   with_items:
+#     - exclude kernel
+#     - inttf.repo
+
+- name: Upgrade all packages
+  become: yes
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: needed dependencies
+  become: yes
+  ansible.builtin.dnf:
+    name:
+      - kernel-devel
+      - kernel-headers
+      - gcc
+      - make
+      - dkms
+      - acpid
+      - libglvnd-glx
+      - libglvnd-opengl
+      - libglvnd-devel
+      - pkgconfig
+    state: latest
+
+
+- name: Disable nouveau
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/blacklist.conf
+    regexp: '^blacklist nouveau'
+    line: blacklist nouveau
+    create: yes
+
+- name: Wayland grub
+  become: yes
+  ansible.builtin.replace:
+    path: /etc/default/grub
+    regexp: '(rhgb quiet).*"$'
+    replace: 'rhgb quiet rd.driver.blacklist=nouveau nvidia-drm.modeset=1"'
+  when: protocol == "Wayland"
+
+
+- name: X11 grub
+  become: yes
+  ansible.builtin.replace:
+    path: /etc/default/grub
+    regexp: '(rhgb quiet).*"$'
+    replace: 'rhgb quiet rd.driver.blacklist=nouveau"'
+  when: protocol == "X11"
+
+- name: Generate grub
+  become: yes
+  ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  # args:
+  #   creates: /path/to/
+
+# source: https://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/
